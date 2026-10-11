@@ -1,8 +1,7 @@
-<p align = "center" draggable=”false” ><img src="https://github.com/AI-Maker-Space/LLM-Dev-101/assets/37101144/d1343317-fa2f-41e1-8af1-1dbb18399719" 
+<p align = "center" draggable="false" ><img src="https://github.com/AI-Maker-Space/LLM-Dev-101/assets/37101144/d1343317-fa2f-41e1-8af1-1dbb18399719" 
      width="200px"
-     height="auto"/>
+     height="auto" alt=""/>
 </p>
-
 
 ## <h1 align="center" id="heading"> 👋 Welcome to the AI Engineer Challenge</h1>
 
@@ -10,7 +9,7 @@
 
 > New to coding? Start with our [Interactive Dev Environment for LLM Development](https://github.com/AI-Maker-Space/Interactive-Dev-Environment-for-AI-Engineers) guide. It will walk you through setting up the tools and API keys you'll need for the course.
 
-In this repository, we'll walk you through the steps to create a LLM (Large Language Model) powered application with a vibe-coded frontend!
+In this repository, we'll show you how to create a LLM (Large Language Model) powered application with a vibe-coded frontend!
 
 Are you ready? Let's get started!
 
@@ -32,7 +31,7 @@ Got everything in place? Let's move on!
 
      ![image](https://i.imgur.com/bhjySNh.png)
 
-1. Clone your newly created repo.
+2. Clone your newly created repo.
 
      ``` bash
      # First, navigate to where you want the project folder to be created
@@ -44,27 +43,22 @@ Got everything in place? Let's move on!
 
      > Note: This command uses SSH. If you haven't set up SSH with GitHub, the command will fail. In that case, use HTTPS by replacing `git@github.com:` with `https://github.com/` - you'll then be prompted for your GitHub username and personal access token.
 
-2. Verify your git setup:
+3. Verify your git setup:
 
      ```bash
-     # Check that your remote is set up correctly
-     git remote -v
+      cd The-AI-Engineering-Challenge
+      
+      # Check that your remote is set up correctly
+      git remote -v
 
-     # Check the status of your repository
-     git status
+      # Check the status of your repository
+      git status
 
-     # See which branch you're on
-     git branch
+      # See which branch you're on
+      git branch
      ```
 
      <!-- > Need more help with git? Check out our [Detailed Git Setup Guide](docs/GIT_SETUP.md) for a comprehensive walkthrough of git configuration and best practices. -->
-
-3. Open the freshly cloned repository inside Cursor!
-
-     ```bash
-     cd The-AI-Engineering-Challenge
-     cursor .
-     ```
 
 4. Check out the existing backend code found in `/api/index.py`
 
@@ -73,34 +67,72 @@ Got everything in place? Let's move on!
 <details>
   <summary>⚙️ Backend Setup with uv</summary>
 
-1. Install the [`uv`](https://github.com/astral-sh/uv) package manager (`pip install uv`). `uv` will download and manage Python 3.12 for you the first time you run a project command.
-2. From the project root, install dependencies with `uv sync`. This creates `.venv/` (and fetches Python 3.12 automatically if needed).
-3. Set your OpenAI API key in the shell before running the server, for example `export OPENAI_API_KEY=sk-...`.
-4. Start the backend directly from the project root with `uv run uvicorn api.index:app --reload`. The server will run on `http://localhost:8000` with auto-reload enabled for development.
-5. Additional backend details live in `api/README.md`.
+### Prerequisites
+
+This project needs a few developer tools: **git**, **uv** (which brings its own Python 3.12), and **Node.js / npm** (for the frontend).
+
+Check what you already have at any time:
+
+```bash
+./scripts/check-deps.sh
+```
+
+If anything is missing, run the bootstrap script — it installs everything into a single, self-contained folder (`~/.ai-eng-challenge-deps`) so cleanup is just deleting that one directory:
+
+```bash
+./scripts/bootstrap.sh
+```
+
+Prefer to install `uv` by hand? Use the **standalone installer** (no existing Python/pip required):
+
+# macOS / Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Windows (PowerShell)
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+Already have Python? pip install uv (or brew install uv / pipx install uv) works too. Either way, uv will download and manage Python 3.12 for you.
+
+1. From the project root, install dependencies with uv sync. This creates .venv/ (and fetches Python 3.12 automatically if needed).
+2. Set your OpenAI API key in the shell before running the server, for example export OPENAI_API_KEY=sk-....
+3. Start the backend directly from the project root with uv run uvicorn api.index:app --reload. The server will run on http://localhost:8000 with auto-reload enabled for development.
+4. Additional backend details live in api/README.md.
 
 </details>
 
 <details>
   <summary>🔥Setting Up for Vibe Coding Success </summary>
 
-While it is a bit counter-intuitive to set things up before jumping into vibe-coding - it's important to remember that there exists a gradient betweeen AI-Assisted Development and Vibe-Coding. We're only reaching *slightly* into AI-Assisted Development for this challenge, but it's worth it!
+While it is a bit counter-intuitive to set things up before jumping into vibe-coding - it's important to remember that there exists a gradient between AI-Assisted Development and Vibe-Coding. We're only reaching *slightly* into AI-Assisted Development for this challenge, but it's worth it!
 
-1. Check out the rules in `.cursor/rules/` and add theme-ing information like colour schemes in `frontend-rule.mdc`! You can be as expressive as you'd like in these rules!
-2. We're going to index some docs to make our application more likely to succeed. To do this - we're going to start with `CTRL+SHIFT+P` (or `CMD+SHIFT+P` on Mac) and we're going to type "custom doc" into the search bar. 
+> 🤖 **Works with any agent** This repo keeps its agent rules in one portable `AGENTS.md` file at the project root. Bring whatever harness you vibe with: Cursor, Claude Code, OpenAI Codex, GitHub Copilot, and friends will all read the same rules:
+> - **`AGENTS.md`** — the single source of truth. ✏️ **Edit this one file** and every agent instantly follows the new rules.
+> - **`CLAUDE.md`** — a thin pointer so Claude Code inherits `AGENTS.md`.
+> - **`.github/copilot-instructions.md`** — a thin pointer so GitHub Copilot inherits `AGENTS.md`.
+> - **`.cursor/rules/`** — kept as-is so Cursor still gets its native, file-scoped targeting (e.g., the frontend rule only kicks in for frontend work).
+>
+> No matter which tool you pick, you only maintain your rules in **one place**. 🎯
 
-     ![image](https://i.imgur.com/ILx3hZu.png)
-3. We're then going to copy and paste `https://nextjs.org/docs` into the prompt.
+1. Check out the portable `AGENTS.md` or the rules in `.cursor/rules/` and add theme-ing information like color schemes in `frontend-rule.mdc`! You can be as expressive as you'd like in these rules!
+2. Next, let's pull the Next.js (and Vercel) docs into our agent's context, so it's far more likely to generate code that actually works. 📚 This isn't tied to any single IDE. Pick whichever path your editor and agent support (the examples below use **Visual Studio Code**, but the same ideas apply to any IDE):
 
-     ![image](https://i.imgur.com/psBjpQd.png)
+   **🅰️ Your agent's built-in docs indexer**
+     Most coding agents can index external docs for you:
+     - **VS Code + GitHub Copilot:** open Copilot Chat and add the docs as context with `#fetch https://nextjs.org/docs` (and `#fetch https://vercel.com/docs`), or use the context (`+`) button to attach a URL.
+     - **Cursor:** press `CTRL+SHIFT+P` / `CMD+SHIFT+P`, type "custom doc", paste `https://nextjs.org/docs`, accept the defaults, then repeat for `https://vercel.com/docs`. Reference them later with `@Docs`.
+     - **Other IDEs/agents:** look for an "add docs", "index URL", or "@docs" style feature — the flow is the same: point it at the docs URL once, then reference it in chat.
+   
+   **🅱️ Any MCP-capable agent (recommended for cross-IDE setups)** — Model Context Protocol works in VS Code, Cursor, Claude Code, Codex, and more, so your docs setup will always be the same. Add a documentation MCP server such as [Context7](https://github.com/upstash/context7):
+     ```bash
+     # Example: register Context7 with Claude Code (other agents use their own MCP config/UI)
+     claude mcp add context7 -- npx -y @upstash/context7-mcp
+     ```
+     In VS Code you can register the same server from the Command Palette via **"MCP: Add Server"**. Then ask your agent to "use the Next.js docs" and it will pull live, version-accurate pages into context.
 
-4. We're then going to use the default configs to add these docs to our available and indexed documents.
+3. The `llms.txt` convention (works in literally any IDE)** — Many frameworks publish an LLM-friendly docs index. Next.js exposes one at [`https://nextjs.org/docs/llms.txt`](https://nextjs.org/docs/llms.txt). Paste that URL (or its contents) into any agent's chat, or note it in `AGENTS.md` so every harness knows to consult it. No special indexer required! 🎉
 
-     ![image](https://i.imgur.com/LULLeaF.png)
+4. Whichever path you chose, give it a quick smoke test: ask your agent something like *"Using the Next.js App Router docs, scaffold a page that calls our FastAPI backend."* If it references the docs accurately, you're indexed and ready to vibe. ✅
 
-5. After that - you will do the same with Vercel's documentation. After which you should see:
-
-     ![image](https://i.imgur.com/hjyXhhC.png) 
 
 </details>
 
@@ -117,7 +149,7 @@ While it is a bit counter-intuitive to set things up before jumping into vibe-co
 
 4. Run the frontend using the instructions Cursor provided. 
 
-> NOTE: If you run into any errors, copy and paste them back into the Cursor chat window - and ask Cursor to fix them!
+> NOTE: If you run into any errors, copy and paste them back into the Cursor chat window – and ask Cursor to fix them!
 
 > NOTE: You have been provided with a backend in the `/api` folder - please ensure your Front End integrates with it!
 
@@ -126,7 +158,7 @@ While it is a bit counter-intuitive to set things up before jumping into vibe-co
 <details>
   <summary>🚀 Deploying Your First LLM-powered Application with Vercel</summary>
 
-1. Ensure you have signed into [Vercel](https://vercel.com/) with your GitHub account.
+1. Ensure you have signed in to [Vercel](https://vercel.com/) with your GitHub account.
 
 2. Ensure you have `npm` (this may have been installed in the previous vibe-coding step!) - if you need help with that, ask Cursor!
 
@@ -146,13 +178,13 @@ While it is a bit counter-intuitive to set things up before jumping into vibe-co
 
      ![image](https://i.imgur.com/D1iKGCq.png)
 
-6. Once the build is completed - head to the provided link and try out your app!
+6. Once the build is completed – head to the provided link and try out your app!
 
-> NOTE: Remember, if you run into any errors - ask Cursor to help you fix them!
+> NOTE: Remember, if you run into any errors, ask Cursor to help you fix them!
 
 ### Vercel Link to Share
 
-You'll want to make sure you share you *domains* hyperlink to ensure people can access your app!
+You'll want to make sure you share your *domains* hyperlink to ensure people can access your app!
 
 ![image](https://i.imgur.com/mpXIgIz.png)
 
@@ -168,7 +200,6 @@ You'll want to make sure you share you *domains* hyperlink to ensure people can 
 2. 🚢 Ship: Deploy your app to Vercel
 3. 🚀 Share: Submit your completed challenge through the [Typeform submission link](https://maven.com/aimakerspace/admin/courses/ai-eng-bootcamp/syllabus/modules/TYPEFORM_LINK).
 
-</details>
 
 ### 🎉 Congratulations! 
 
@@ -176,7 +207,7 @@ You just 🏗️ built, 🚢 shipped, and 🚀 shared your first LLM-powered app
 
 **But why stop there?**
 
-Get on linkedin and post your results and experience! Make sure to tag us at @AIMakerspace!
+Get on LinkedIn and post your results and experience! Make sure to tag us at @AIMakerspace!
 
 Here's a template to get your post started!
 

@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+from provider import get_client
 app = FastAPI()
 
 # CORS so the frontend can talk to backend
@@ -17,7 +18,8 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+llm_provider: OpenAI = os.getenv("LLM_PROVIDER", "openai")
+client, model = get_client(llm_provider)
 
 class ChatRequest(BaseModel):
     message: str
@@ -26,15 +28,17 @@ class ChatRequest(BaseModel):
 def root():
     return {"status": "ok"}
 
+@app.get("/api/health")
+def health():
+    return {"status": "ok"}
+
 @app.post("/api/chat")
 def chat(request: ChatRequest):
-    if not os.getenv("OPENAI_API_KEY"):
-        raise HTTPException(status_code=500, detail="OPENAI_API_KEY not configured")
-    
+
     try:
         user_message = request.message
         response = client.chat.completions.create(
-            model="gpt-5",
+            model=model,
             messages=[
                 {"role": "system", "content": "You are a supportive mental coach."},
                 {"role": "user", "content": user_message}
